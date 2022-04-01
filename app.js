@@ -1,21 +1,23 @@
 const express = require('express');
+
 const bodyParser = require('body-parser');
 
 const app = express();
 
+const path = require('path');
+
+const adminRoutes = require('./routes/admin.js');
+
+const shopRoutes = require('./routes/shop.js');
+
 app.use(bodyParser.urlencoded({extended: false}));
 
-app.use('/add-product' , (req,res, next) => {
-    res.send('<form action="/product" method="POST"><input type="text" name="title" placeholder="Add Product Name"><input type="number" name="quantity" placeholder="Add Product Quantity"><button type="submit"> Add Product </button></form>');
-})
+app.use('/admin' , adminRoutes);
 
-app.use('/product' , (req,res, next) => {
-    console.log(req.body);
-    res.redirect('/'); 
-})
+app.use('/shop' , shopRoutes);
 
-app.use('/', (req, res, next) => {
-    res.send('<h1>Welcome to the Home Page</h1>');
+app.use( (req, res, next) => {
+    res.status(404).sendFile(path.join(__dirname, 'routes' , '404.html'));
 })
  
 
