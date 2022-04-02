@@ -5,9 +5,9 @@ const rootDir = require('../util/path');
 
 const router = express.Router();
 
-router.use('/success' , (req,res, next) => {
-  res.sendFile(path.join(rootDir , 'views' , 'success.html'));
-})
+const successController = require('../controllers/success.js');
+
+router.use('/success' , successController.getSuccessPage);
 
 // router.post('/success' , (req,res, next) => {
 //   res.redirect('/'); 
